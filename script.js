@@ -8,18 +8,22 @@ window.onload = function loading() {
 
     //HTML longin view
     let loginDesplay = `
+    <div>
        <h1> Please login</h1>
        User name: <input type="text" id="userName" value= mwp ><br>
        Password: <input type= "text" id= "password" value= 123><br>
-       <button id= "login">Login</button>`
+       <button id= "login">Login</button>
+       </div>`
 
     //HTML animation view
     let animationDesplay = `
-    
+    <div>
     <h1 id= "animation">  </h1>
-    <textarea id = "animationView"  rows="30" cols="50"> </textarea><br>
+    <textarea id = "animationView"  rows="30" cols="50"  > </textarea><br>
     <button id= "refresh">Refresh Animation</button>
-    <button id= "logout">Logout</button>`
+    <button id= "logout">Logout</button>
+    <div>`
+
     // calling the HTML file
     let divDisplay = document.querySelector("#outlet")
     divDisplay.innerHTML = loginDesplay
@@ -50,10 +54,14 @@ window.onload = function loading() {
 
     function backToLoginView() {
         divDisplay.innerHTML = loginDesplay
+        //adding event listner to login butoon.
+        let loginButton = document.querySelector("#login");
+        loginButton.addEventListener("click", loginnFunction);
     }
 
 
     function feachingAddres() {
+        let userinput= document.get
         navigator.geolocation.getCurrentPosition(success, fail);
         async function success(position) {
             console.log(position)
@@ -85,6 +93,7 @@ window.onload = function loading() {
 
     }
     async function feachlogin() {
+        
         let request = await fetch("http://www.mumstudents.org/api/login",
             {
                 method: "POST",
@@ -115,7 +124,6 @@ window.onload = function loading() {
             }
         })
         if (animatedId) clearInterval(animatedId)
-
         let anim = await response.text();
         let frames = anim.split('=====\n');
         let framesLength = frames.length;
@@ -124,7 +132,6 @@ window.onload = function loading() {
             document.getElementById('animationView').innerHTML = frames[currFrame];
             currFrame++;
             if (currFrame === framesLength) currFrame = 0;
-
         }, 200)
     }
 }
