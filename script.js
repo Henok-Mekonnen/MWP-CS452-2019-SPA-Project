@@ -5,13 +5,15 @@ window.onload = function loading() {
     //variable diclaration    
     let token;
     let animatedId;
+    let username;
+    let password
 
     //HTML longin view
     let loginDesplay = `
     <div>
        <h1> Please login</h1>
-       User name: <input type="text" id="userName" value= mwp ><br>
-       Password: <input type= "text" id= "password" value= 123><br>
+       User name: <input type="text" id="userName" value="mwp" ><br>
+       Password: <input type= "text" id= "passWord" value="123"><br>
        <button id= "login">Login</button>
        </div>`
 
@@ -34,14 +36,19 @@ window.onload = function loading() {
 
     // login function with its functionalities 
     function loginnFunction() {
+        password = document.getElementById("passWord").value
+        username = document.getElementById("userName").value
+        if (password === "123" && username === "mwp") {
 
-        alert("you are loging in");
-        divDisplay.innerHTML = animationDesplay
-        logoutFunction()
-        feachAnimation()
-        feachingAddres()
-        //adding event for refresh button 
-        document.querySelector("#refresh").addEventListener("click", feachAnimation)
+            alert("you are loging in");
+            divDisplay.innerHTML = animationDesplay
+            logoutFunction()
+            feachAnimation()
+            feachingAddres()
+            //adding event for refresh button 
+            document.querySelector("#refresh").addEventListener("click", feachAnimation)
+        }
+        else { alert("Wrong Login Credential tray again") }
 
     }
 
@@ -61,7 +68,7 @@ window.onload = function loading() {
 
 
     function feachingAddres() {
-        let userinput= document.get
+        // let userinput = document.get
         navigator.geolocation.getCurrentPosition(success, fail);
         async function success(position) {
             console.log(position)
@@ -93,7 +100,7 @@ window.onload = function loading() {
 
     }
     async function feachlogin() {
-        
+
         let request = await fetch("http://www.mumstudents.org/api/login",
             {
                 method: "POST",
