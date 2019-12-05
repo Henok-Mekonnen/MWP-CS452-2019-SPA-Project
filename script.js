@@ -8,6 +8,7 @@ window.onload = function loading() {
     let username;
     let password
 
+
     //HTML longin view
     let loginDesplay = `
     <div>
@@ -33,9 +34,17 @@ window.onload = function loading() {
     //adding event for login button 
     let loginButton = document.querySelector("#login");
     loginButton.addEventListener("click", loginnFunction);
-
+    backToLoginView()
     // login function with its functionalities 
     function loginnFunction() {
+        //memorizng the history
+        history.pushState({ loginnFunction: 1 }, "title", "index.html")
+        window.addEventListener("popstate", function (event) {
+            if (event.state.loginnFunction === 1) {
+                clearInterval(animationDesplay)
+                backToLoginView()
+            }
+        })
         password = document.getElementById("passWord").value
         username = document.getElementById("userName").value
         if (password === "123" && username === "mwp") {
@@ -51,14 +60,14 @@ window.onload = function loading() {
         else { alert("Wrong Login Credential tray again") }
 
     }
-
+    // logout function from animation view
     function logoutFunction() {
         // alert("you are loging out ")
         // divDisplay.innerHTML = loginDesplay
         let logoutButton = document.querySelector("#logout");
         logoutButton.addEventListener("click", backToLoginView);
     }
-
+    //helper function for logout  to back to login view
     function backToLoginView() {
         divDisplay.innerHTML = loginDesplay
         //adding event listner to login butoon.
@@ -66,16 +75,13 @@ window.onload = function loading() {
         loginButton.addEventListener("click", loginnFunction);
     }
 
-
+    // fitching addres from the geolocation server
     function feachingAddres() {
-        // let userinput = document.get
         navigator.geolocation.getCurrentPosition(success, fail);
         async function success(position) {
             console.log(position)
             let longitude = position.coords.longitude
             let latitude = position.coords.latitude
-            // console.log('Longitude:' + position.coords.longitude);
-            // console.log('Latitude:' + position.coords.latitude);
             let addres = await fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=WFqvIrAcLZO7zsWflhxYDWgBVoH8yRXQ&location=${latitude},${longitude}&includeRoadMetadata=true&includeNearestIntersection=true`, {
                 method: "GET",
                 headers: {
@@ -99,29 +105,13 @@ window.onload = function loading() {
 
 
     }
-    async function feachlogin() {
-
-        let request = await fetch("http://www.mumstudents.org/api/login",
-            {
-                method: "POST",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify({
-                    "username": "mwp",
-                    "password": "123"
-                })
-            })
-        let x = await request.json();
-        let y = x.token;
-        // console.log(y)
-
-    }
-
+    
+    //fitching the annimation from mumstudents server
     token = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtd2EiLCJpc3N1ZWRBdCI6IjIwMTktMTEtMjgiLCJ1c2VybmFtZSI6Im13cCJ9.H_AyVaB6QvmKtrXzEC_mHigPPToWRie_rSlstl5P4brg-bt5-HE62ETEjCZWbOVc0VggV7IW3hf2fe-6zb1Uog`;
 
     async function feachAnimation() {
 
         let url = "http://www.mumstudents.org/api/animation ";
-
 
         const response = await fetch(url, {
             method: 'GET',
