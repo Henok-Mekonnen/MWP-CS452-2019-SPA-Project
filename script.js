@@ -41,7 +41,7 @@ window.onload = function loading() {
         history.pushState({ loginnFunction: 1 }, "title", "index.html")
         window.addEventListener("popstate", function (event) {
             if (event.state.loginnFunction === 1) {
-                clearInterval(animationDesplay)
+                clearInterval(animatedId)
                 backToLoginView()
             }
         })
